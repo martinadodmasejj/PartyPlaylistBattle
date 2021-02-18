@@ -1,4 +1,4 @@
-package com.Party_Playlist_Battle.playlist_content;
+package com.Party_Playlist_Battle.playlist_and_library;
 import com.Party_Playlist_Battle.enums.genres;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

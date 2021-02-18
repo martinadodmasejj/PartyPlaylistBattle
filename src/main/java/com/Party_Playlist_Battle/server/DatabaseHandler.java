@@ -12,7 +12,7 @@ public class DatabaseHandler {
     PasswordHasher pwHasher=new PasswordHasher();
     Statement stmt;
     public DatabaseHandler() throws SQLException {
-        jdbcURL="jdbc:postgresql://localhost:5432/MonsterCardGame";
+        jdbcURL="jdbc:postgresql://localhost:5432/PartyPlaylistBattle";
         username="postgres";
         password="root";
         connection = DriverManager.getConnection(jdbcURL,username,password);
@@ -23,14 +23,14 @@ public class DatabaseHandler {
     }
     public void createUser(String username,String password) throws SQLException, InvalidKeySpecException, NoSuchAlgorithmException {
         password=pwHasher.generateStrongPasswordHash(password);
-        String insertStatement="INSERT INTO \"MonsterCardGame\".\"user\" (\"username\",\"password\") " +
+        String insertStatement="INSERT INTO \"PartyPlaylistBattle\".\"user\" (\"username\",\"password\") " +
                 "VALUES (\'"+username+"\',\'"+password+"\')";
         stmt=connection.createStatement();
         stmt.executeUpdate(insertStatement);
     }
     public boolean validateUser(String username,String password) throws SQLException, InvalidKeySpecException, NoSuchAlgorithmException {
         String db_pass="";
-        String selectStatement="Select \"password\" from \"MonsterCardGame\".\"user\" "
+        String selectStatement="Select \"password\" from \"PartyPlaylistBattle\".\"user\" "
         +"where \"username\"=?";
         PreparedStatement preparedStatement=connection.prepareStatement(selectStatement);
         preparedStatement.setString(1,username);

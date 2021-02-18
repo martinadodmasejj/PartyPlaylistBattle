@@ -57,7 +57,7 @@ public class UserManager {
         mutex.unlock();
     }
 
-    public void startBattle(DatabaseHandler dbHandler) throws SQLException {
+  /*  public void startBattle(DatabaseHandler dbHandler) throws SQLException {
         mutex.lock();
         User user1=battleQueue.poll();
         User user2=battleQueue.poll();
@@ -78,7 +78,7 @@ public class UserManager {
             System.out.println("Starting Battle between: "+user1.getUsername()+" and "+user2.getUsername());
             user1.battle(user2,dbHandler);
         }
-    }
+    }*/
 
 
 }

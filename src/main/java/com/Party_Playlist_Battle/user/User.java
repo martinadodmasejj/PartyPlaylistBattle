@@ -1,16 +1,12 @@
 package com.Party_Playlist_Battle.user;
 
 import com.Party_Playlist_Battle.server.DatabaseHandler;
-import com.Party_Playlist_Battle.stack.Deck;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class User {
@@ -82,11 +78,10 @@ public class User {
         this.image = image;
     }
 
-    public Deck returnDeck(){ return deck;  }
 
     public void getUserIdDatabase(DatabaseHandler dbHandler) throws SQLException {
         if(userID==-1) {
-            String getUserID = "Select \"userid\" from \"MonsterCardGame\".\"user\"\n" +
+            String getUserID = "Select \"userid\" from \"PartyPlaylistBattle\".\"user\"\n" +
                     "WHERE \"username\" = ?";
             PreparedStatement preparedStatement = dbHandler.getConnection().prepareStatement(getUserID);
             preparedStatement.setString(1, username);
@@ -129,31 +124,9 @@ public class User {
         return firstName;
     }
 
-
-
-    public void showAcquiredCards(DatabaseHandler dbHandler) throws SQLException {
-        getUserIdDatabase(dbHandler);
-        String selectCards="select * " +
-                "from \"MonsterCardGame\".\"card\" as c" +
-                " join \"MonsterCardGame\".\"package\" as p" +
-                " on c.\"packageid\"=p.\"packageid\"" +
-                " where p.\"userid\"="+userID;
-        Statement stmt=dbHandler.getConnection().createStatement();
-        System.out.println(selectCards);
-        ResultSet resultSet=stmt.executeQuery(selectCards);
-        int i=0;
-        while (resultSet.next()){
-            i++;
-            System.out.println("Card "+resultSet.getString("cardserialid")+": "
-                    +resultSet.getString("cardname")+" "+resultSet.getString("carddamage")+
-                    " "+resultSet.getString("cardattribute")+" "+resultSet.getString("cardmonster"));
-        }
-    }
-
-
     public void updateUserData(DatabaseHandler dbHandler,String payload) throws IOException, SQLException {
         String firstName=deserialiseUserInfo(payload);
-        String sqlUpdate="UPDATE \"MonsterCardGame\".\"user\" " +
+        String sqlUpdate="UPDATE \"PartyPlaylistBattle\".\"user\" " +
                 "SET  \"firstname\"= ? , \"bio\"= ? , \"image\"= ?"
                 +" WHERE \"username\"=?";
         PreparedStatement preparedStatement=dbHandler.getConnection().prepareStatement(sqlUpdate);
@@ -165,7 +138,7 @@ public class User {
     }
 
     public void showUserData(DatabaseHandler dbHandler)throws SQLException{
-        String sqlSelect="select * from \"MonsterCardGame\".\"user\" where \"username\" = ? ";
+        String sqlSelect="select * from \"PartyPlaylistBattle\".\"user\" where \"username\" = ? ";
         PreparedStatement preparedStatement=dbHandler.getConnection().prepareStatement(sqlSelect);
         preparedStatement.setString(1,username);
         ResultSet resultSet=preparedStatement.executeQuery();
@@ -179,9 +152,9 @@ public class User {
 
     public void initialiseStats(DatabaseHandler dbHandler)throws SQLException{
         getUserIdDatabase(dbHandler);
-        String sqlInsert="INSERT INTO \"MonsterCardGame\".stats( " +
-                " userid, elo, wins, losses, draws) " +
-                " VALUES (?, 100, 0, 0, 0) ";
+        String sqlInsert="INSERT INTO \"PartyPlaylistBattle\".stats( " +
+                " userid, wins, losses) " +
+                " VALUES (?,  0, 0) ";
         PreparedStatement preparedStatement=dbHandler.getConnection().prepareStatement(sqlInsert);
         preparedStatement.setInt(1,userID);
         preparedStatement.executeUpdate();

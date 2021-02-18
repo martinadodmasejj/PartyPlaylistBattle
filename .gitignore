@@ -4,6 +4,7 @@ out/
 /databases/
 *.class
 MonsterTradingCards.exercise.curl.bat
+party-playlist-battle.testing.bat
 MonsterTradingCards.txt
 Dokumentiert.txt
 .MonsterTradingCards.exercise.curl.bat.swo

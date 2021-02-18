@@ -1,8 +1,5 @@
 package com.Party_Playlist_Battle.tests;
 
-import com.Party_Playlist_Battle.cards.Card;
-import com.Party_Playlist_Battle.cards.MonsterCard;
-import com.Party_Playlist_Battle.cards.SpellCard;
 import com.Party_Playlist_Battle.server.JsonSerializer;
 import com.Party_Playlist_Battle.user.User;
 import org.junit.Assert;
@@ -16,6 +13,7 @@ import java.io.IOException;
 public class JsonSerializerTest {
     @Test
     public void testCardSerialization() throws IOException {
+        /*
         //Arrange
         JsonSerializer jsonSerializer=new JsonSerializer();
         BufferedReader in= Mockito.mock(BufferedReader.class);
@@ -30,6 +28,7 @@ public class JsonSerializerTest {
         Assert.assertEquals(10,monsterCard.getDamage());
         Assert.assertEquals(elements.Water,spellCard.getAttribute());
         Assert.assertEquals(20,spellCard.getDamage());
+         */
     }
 
     @Test

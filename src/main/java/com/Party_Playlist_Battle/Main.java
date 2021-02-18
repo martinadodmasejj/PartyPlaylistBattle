@@ -1,8 +1,5 @@
 package com.Party_Playlist_Battle;
 
-import com.Party_Playlist_Battle.cards.Card;
-import com.Party_Playlist_Battle.cards.MonsterCard;
-import com.Party_Playlist_Battle.cards.SpellCard;
 import com.Party_Playlist_Battle.server.*;
 import com.Party_Playlist_Battle.user.UserManager;
 
