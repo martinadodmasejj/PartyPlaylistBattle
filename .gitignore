@@ -1,0 +1,20 @@
+/Monster_card_trading_game/
+/out/production/Monster_Card_Trading_Game/META-INF/Monster_Card_Trading_Game.kotlin_module
+out/
+/databases/
+*.class
+MonsterTradingCards.exercise.curl.bat
+MonsterTradingCards.txt
+Dokumentiert.txt
+.MonsterTradingCards.exercise.curl.bat.swo
+.MonsterTradingCards.exercise.curl.bat.swp
+ToDo.txt
+testcurls.txt
+MonsterTradingCards.exercise.curl - no fail.bat
+/UML/
+battle.bat
+battle_v2.bat
+database_dump
+db_schema.pdf
+/target/
+uml_final.pdf
