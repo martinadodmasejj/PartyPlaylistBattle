@@ -1,4 +1,4 @@
-package com.Monster_Card_Game.enums;
+package com.Party_Playlist_Battle.enums;
 
 public enum elements {
     Fire,

@@ -1,9 +1,8 @@
-package com.Monster_Card_Game.tests;
+package com.Party_Playlist_Battle.tests;
 
-import com.Monster_Card_Game.server.RequestContext;
+import com.Party_Playlist_Battle.server.RequestContext;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.io.BufferedReader;
 import java.io.IOException;

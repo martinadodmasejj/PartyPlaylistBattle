@@ -1,8 +1,7 @@
-package com.Monster_Card_Game.user;
+package com.Party_Playlist_Battle.user;
 
-import com.Monster_Card_Game.server.DatabaseHandler;
+import com.Party_Playlist_Battle.server.DatabaseHandler;
 
-import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;

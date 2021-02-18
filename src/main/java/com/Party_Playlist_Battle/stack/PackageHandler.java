@@ -1,15 +1,14 @@
-package com.Monster_Card_Game.stack;
+package com.Party_Playlist_Battle.stack;
 
-import com.Monster_Card_Game.cards.Card;
-import com.Monster_Card_Game.server.DatabaseHandler;
-import com.Monster_Card_Game.server.JsonSerializer;
+import com.Party_Playlist_Battle.cards.Card;
+import com.Party_Playlist_Battle.server.DatabaseHandler;
+import com.Party_Playlist_Battle.server.JsonSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 
 public class PackageHandler {
     Card[] cardPackage=new Card[5];

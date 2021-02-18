@@ -1,9 +1,8 @@
-package com.Monster_Card_Game.server;
+package com.Party_Playlist_Battle.server;
 
-import com.Monster_Card_Game.stack.PackageHandler;
-import com.Monster_Card_Game.user.User;
-import com.Monster_Card_Game.user.UserManager;
-import sun.misc.Cleaner;
+import com.Party_Playlist_Battle.stack.PackageHandler;
+import com.Party_Playlist_Battle.user.User;
+import com.Party_Playlist_Battle.user.UserManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,9 +11,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ClientThread extends Thread {

@@ -1,10 +1,9 @@
-package com.Monster_Card_Game.stack;
-import com.Monster_Card_Game.cards.Card;
-import com.Monster_Card_Game.cards.MonsterCard;
-import com.Monster_Card_Game.cards.SpellCard;
-import com.Monster_Card_Game.server.DatabaseHandler;
+package com.Party_Playlist_Battle.stack;
+import com.Party_Playlist_Battle.cards.Card;
+import com.Party_Playlist_Battle.cards.MonsterCard;
+import com.Party_Playlist_Battle.cards.SpellCard;
+import com.Party_Playlist_Battle.server.DatabaseHandler;
 
-import javax.xml.crypto.Data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

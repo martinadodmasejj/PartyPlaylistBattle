@@ -1,24 +1,14 @@
-package com.Monster_Card_Game;
+package com.Party_Playlist_Battle;
 
-import com.Monster_Card_Game.cards.Card;
-import com.Monster_Card_Game.cards.MonsterCard;
-import com.Monster_Card_Game.cards.SpellCard;
-import com.Monster_Card_Game.enums.elements;
-import com.Monster_Card_Game.enums.monsters;
-import com.Monster_Card_Game.server.*;
-import com.Monster_Card_Game.stack.PackageHandler;
-import com.Monster_Card_Game.user.User;
-import com.Monster_Card_Game.user.UserManager;
+import com.Party_Playlist_Battle.cards.Card;
+import com.Party_Playlist_Battle.cards.MonsterCard;
+import com.Party_Playlist_Battle.cards.SpellCard;
+import com.Party_Playlist_Battle.server.*;
+import com.Party_Playlist_Battle.user.UserManager;
 
-import javax.jws.soap.SOAPBinding;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
 public class Main {

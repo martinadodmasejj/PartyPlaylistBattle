@@ -1,8 +1,7 @@
-package com.Monster_Card_Game.user;
+package com.Party_Playlist_Battle.user;
 
-import com.Monster_Card_Game.server.DatabaseHandler;
+import com.Party_Playlist_Battle.server.DatabaseHandler;
 
-import javax.jws.soap.SOAPBinding;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

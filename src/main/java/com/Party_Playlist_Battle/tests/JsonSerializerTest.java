@@ -1,15 +1,15 @@
-package com.Monster_Card_Game.tests;
+package com.Party_Playlist_Battle.tests;
 
-import com.Monster_Card_Game.cards.Card;
-import com.Monster_Card_Game.cards.MonsterCard;
-import com.Monster_Card_Game.cards.SpellCard;
-import com.Monster_Card_Game.server.JsonSerializer;
-import com.Monster_Card_Game.user.User;
+import com.Party_Playlist_Battle.cards.Card;
+import com.Party_Playlist_Battle.cards.MonsterCard;
+import com.Party_Playlist_Battle.cards.SpellCard;
+import com.Party_Playlist_Battle.server.JsonSerializer;
+import com.Party_Playlist_Battle.user.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-import com.Monster_Card_Game.enums.monsters;
-import com.Monster_Card_Game.enums.elements;
+import com.Party_Playlist_Battle.enums.monsters;
+import com.Party_Playlist_Battle.enums.elements;
 import java.io.BufferedReader;
 import java.io.IOException;
 

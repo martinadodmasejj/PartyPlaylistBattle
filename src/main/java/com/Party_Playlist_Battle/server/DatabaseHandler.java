@@ -1,6 +1,5 @@
-package com.Monster_Card_Game.server;
+package com.Party_Playlist_Battle.server;
 
-import java.net.ConnectException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.*;

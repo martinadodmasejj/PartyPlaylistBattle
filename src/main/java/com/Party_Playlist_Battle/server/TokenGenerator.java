@@ -1,4 +1,4 @@
-package com.Monster_Card_Game.server;
+package com.Party_Playlist_Battle.server;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class TokenGenerator {
     }
 
     private boolean authenticate(String user,String header) {
-        if(header.contains("Authorization: Basic "+user+"-mtcgToken")){
+        if(header.contains("Authorization: Basic "+user+"-ppbToken")){
             return true;
         }
         return false;

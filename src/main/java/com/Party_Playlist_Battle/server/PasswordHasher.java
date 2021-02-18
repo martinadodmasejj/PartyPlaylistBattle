@@ -1,4 +1,4 @@
-package com.Monster_Card_Game.server;
+package com.Party_Playlist_Battle.server;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

@@ -1,12 +1,11 @@
-package com.Monster_Card_Game.tests;
+package com.Party_Playlist_Battle.tests;
 
-import com.Monster_Card_Game.server.DatabaseHandler;
+import com.Party_Playlist_Battle.server.DatabaseHandler;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

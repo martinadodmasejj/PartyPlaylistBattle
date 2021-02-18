@@ -1,4 +1,4 @@
-package com.Monster_Card_Game.server;
+package com.Party_Playlist_Battle.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;

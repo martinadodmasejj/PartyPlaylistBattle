@@ -1,9 +1,9 @@
-package com.Monster_Card_Game.server;
+package com.Party_Playlist_Battle.server;
 
-import com.Monster_Card_Game.cards.Card;
-import com.Monster_Card_Game.cards.MonsterCard;
-import com.Monster_Card_Game.cards.SpellCard;
-import com.Monster_Card_Game.user.User;
+import com.Party_Playlist_Battle.cards.Card;
+import com.Party_Playlist_Battle.cards.MonsterCard;
+import com.Party_Playlist_Battle.cards.SpellCard;
+import com.Party_Playlist_Battle.user.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
