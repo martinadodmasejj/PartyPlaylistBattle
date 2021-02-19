@@ -1,8 +1,12 @@
 package com.Party_Playlist_Battle.user;
 
+import com.Party_Playlist_Battle.playlist_and_library.Library;
 import com.Party_Playlist_Battle.server.DatabaseHandler;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.postgresql.util.JdbcBlackHole;
+import sun.security.krb5.internal.APRep;
+
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +22,7 @@ public class User {
     private String image;
     private ReentrantLock mutex=new ReentrantLock();
     private StatsManager statsManager=new StatsManager();
+    public Library lib=new Library();
 
     @JsonCreator
     User(@JsonProperty("Username")String username,@JsonProperty("Password")String password)  {
@@ -158,6 +163,27 @@ public class User {
         PreparedStatement preparedStatement=dbHandler.getConnection().prepareStatement(sqlInsert);
         preparedStatement.setInt(1,userID);
         preparedStatement.executeUpdate();
+    }
+
+    public void initialiseLibrary(DatabaseHandler dbHandler)throws SQLException{
+        getUserIdDatabase(dbHandler);
+        String sqlInsert="INSERT INTO \"PartyPlaylistBattle\".library( " +
+                "userid) VALUES (?)";
+        PreparedStatement preparedStatement= dbHandler.getConnection().prepareStatement(sqlInsert);
+        preparedStatement.setInt(1,userID);
+        ResultSet resultSet=preparedStatement.executeQuery();
+    }
+
+    public void getLibraryID(DatabaseHandler dbHandler)throws SQLException{
+        getUserIdDatabase(dbHandler);
+        String sqlInsert="select libraryid from \"PartyPlaylistBattle\".library " +
+                "where userid=?";
+        PreparedStatement preparedStatement=dbHandler.getConnection().prepareStatement(sqlInsert);
+        preparedStatement.setInt(1,userID);
+        ResultSet resultSet=preparedStatement.executeQuery();
+        while (resultSet.next()){
+            lib.setLibraryID(resultSet.getInt("libraryid"));
+        }
     }
 
     public void showUserStats(DatabaseHandler dbHandler) throws SQLException {

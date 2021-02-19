@@ -1,5 +1,7 @@
 package com.Party_Playlist_Battle.server;
 
+import com.Party_Playlist_Battle.playlist_and_library.Library;
+import com.Party_Playlist_Battle.playlist_and_library.MediaContent;
 import com.Party_Playlist_Battle.user.User;
 import com.Party_Playlist_Battle.user.UserManager;
 
@@ -22,6 +24,7 @@ public class ClientThread extends Thread {
     BufferedReader in;
     UserManager userManager;
     private ReentrantLock mutex=new ReentrantLock();
+    Library lib;
 
     public ClientThread(Socket clientSocket,UserManager userManager) throws SQLException, IOException {
         dbHandler = new DatabaseHandler();
@@ -40,11 +43,13 @@ public class ClientThread extends Thread {
                 String header = handler.readHeader(in);
                 String payload = handler.readPayload(in);
                 String request = handler.readRequest();
+                String verb=handler.readHTTPVerb();
                 System.out.println(payload);
                 if (request.compareTo("users") == 0) {
                     User user = jsonSerializer.convertUserToObject(payload);
                     dbHandler.createUser(user.getUsername(), user.getPassword());
                     user.initialiseStats(dbHandler);
+                    user.initialiseLibrary(dbHandler);
                     user.resetPassword();
                     out.println(handler.ServerResponse);
                     out.flush();
@@ -88,6 +93,35 @@ public class ClientThread extends Thread {
                     out.println(handler.ServerResponse);
                     out.flush();
                 }*/
+                else if(request.compareTo("lib")==0 && verb.compareTo("POST")==0){
+                    String username=tokenGenerator.returnUserFromToken(header);
+                    if (userManager.at(username)==null) {
+                        System.out.println("Not logged in");
+                    }
+                    MediaContent tempMedia=jsonSerializer.convertMediaToObject(payload);
+                    tempMedia.uploadMediaContent(dbHandler,userManager.at(username));
+                    out.println(handler.ServerResponse);
+                    out.flush();
+                }
+                else if(request.compareTo("lib/.") > 0 && verb.compareTo("DELETE")==0){
+                    String username=tokenGenerator.returnUserFromToken(header);
+                    if (userManager.at(username)==null) {
+                        System.out.println("Not logged in");
+                    }
+                    String fileName=request.replace("lib/","");
+                    userManager.at(username).lib.deleteMediaContent(fileName,dbHandler,userManager.at(username));
+                    out.println(handler.ServerResponse);
+                    out.flush();
+                }
+                else if(request.compareTo("lib")==0){
+                    String username=tokenGenerator.returnUserFromToken(header);
+                    userManager.at(username).lib.printLibrary(dbHandler,username);
+                    if (userManager.at(username)==null) {
+                        System.out.println("Not logged in");
+                    }
+                    out.println(handler.ServerResponse);
+                    out.flush();
+                }
                 else if (request.compareTo("stats")==0){
                     String username=tokenGenerator.returnUserFromToken(header);
                     if (userManager.at(username)==null) {
