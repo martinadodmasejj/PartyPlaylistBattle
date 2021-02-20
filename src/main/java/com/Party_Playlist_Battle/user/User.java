@@ -69,7 +69,10 @@ public class User {
         return bio;
     }
 
-    public int getUserID() { return  userID; }
+    public int getUserID(DatabaseHandler dbHandler) throws SQLException {
+        getUserIdDatabase(dbHandler);
+        return  userID;
+    }
 
     public void setBio(String bio) {
         this.bio = bio;

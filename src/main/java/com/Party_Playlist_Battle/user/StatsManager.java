@@ -52,12 +52,12 @@ public class StatsManager {
         String selectSql="select * from \"PartyPlaylistBattle\".\"battlelog\" " +
                 "where \"winnerid\"=? OR \"loserid\"=?";
         PreparedStatement preparedStatement=dbHandler.getConnection().prepareStatement(selectSql);
-        preparedStatement.setInt(1,user.getUserID());
-        preparedStatement.setInt(2,user.getUserID());
+        preparedStatement.setInt(1,user.getUserID(dbHandler));
+        preparedStatement.setInt(2,user.getUserID(dbHandler));
         ResultSet resultSet=preparedStatement.executeQuery();
         while (resultSet.next()){
             System.out.println("Username: "+user.getUsername());
-            if(resultSet.getInt("winnerid")==user.getUserID()){
+            if(resultSet.getInt("winnerid")==user.getUserID(dbHandler)){
                 System.out.println("Won a Battle");
             }
             else {

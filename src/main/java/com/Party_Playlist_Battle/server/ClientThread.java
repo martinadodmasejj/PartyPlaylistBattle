@@ -2,6 +2,7 @@ package com.Party_Playlist_Battle.server;
 
 import com.Party_Playlist_Battle.playlist_and_library.Library;
 import com.Party_Playlist_Battle.playlist_and_library.MediaContent;
+import com.Party_Playlist_Battle.playlist_and_library.Playlist;
 import com.Party_Playlist_Battle.user.User;
 import com.Party_Playlist_Battle.user.UserManager;
 
@@ -24,9 +25,9 @@ public class ClientThread extends Thread {
     BufferedReader in;
     UserManager userManager;
     private ReentrantLock mutex=new ReentrantLock();
-    Library lib;
+    Playlist playlist;
 
-    public ClientThread(Socket clientSocket,UserManager userManager) throws SQLException, IOException {
+    public ClientThread(Socket clientSocket, UserManager userManager, Playlist playlist) throws SQLException, IOException {
         dbHandler = new DatabaseHandler();
         handler = new RequestContext();
         jsonSerializer = new JsonSerializer();
@@ -35,6 +36,7 @@ public class ClientThread extends Thread {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         this.userManager = userManager;
         handler = new RequestContext();
+        this.playlist=playlist;
     }
 
     @Override
@@ -141,6 +143,21 @@ public class ClientThread extends Thread {
                     }
                     out.println(handler.ServerResponse);
                     out.flush();
+                }
+                else if(request.compareTo("playlist")==0 && verb.compareTo("POST")==0){
+                    String username=tokenGenerator.returnUserFromToken(header);
+                    if (userManager.at(username)==null) {
+                        System.out.println("Not logged in");
+                    }
+                    MediaContent content=jsonSerializer.convertMediaToObject(payload);
+                    playlist.addContentPlaylist(content.getFileName(),dbHandler,userManager.at(username));
+                }
+                else if (request.compareTo("playlist")==0 && verb.compareTo("GET")==0){
+                    String username=tokenGenerator.returnUserFromToken(header);
+                    if (userManager.at(username)==null) {
+                        System.out.println("Not logged in");
+                    }
+                    playlist.printPlaylist();
                 }
             } catch (IOException | SQLException | InvalidKeySpecException | NoSuchAlgorithmException e) {
                 System.out.println(e);

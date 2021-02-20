@@ -50,7 +50,7 @@ public class Library {
                 " where userid = ?)";
         PreparedStatement preparedStatement=dbHandler.getConnection().prepareStatement(deleteSql);
         preparedStatement.setString(1,fileName);
-        preparedStatement.setInt(2,user.getUserID());
+        preparedStatement.setInt(2,user.getUserID(dbHandler));
         preparedStatement.executeUpdate();
     }
 }
