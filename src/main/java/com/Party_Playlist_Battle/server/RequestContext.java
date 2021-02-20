@@ -108,4 +108,14 @@ public class RequestContext {
         return list.size();
     }
 
+    public String getFileName(String payload) {
+        int i=10;
+        String fileName="";
+        while (payload.charAt(i)!='\"'){
+            fileName+=payload.charAt(i);
+            i++;
+        }
+        return fileName;
+    }
+
 }

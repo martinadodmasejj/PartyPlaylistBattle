@@ -149,15 +149,15 @@ public class ClientThread extends Thread {
                     if (userManager.at(username)==null) {
                         System.out.println("Not logged in");
                     }
-                    MediaContent content=jsonSerializer.convertMediaToObject(payload);
-                    playlist.addContentPlaylist(content.getFileName(),dbHandler,userManager.at(username));
+                    String fileName=handler.getFileName(payload);
+                    playlist.addContentPlaylist(fileName,dbHandler,userManager.at(username));
+                    out.println(handler.ServerResponse);
+                    out.flush();
                 }
                 else if (request.compareTo("playlist")==0 && verb.compareTo("GET")==0){
-                    String username=tokenGenerator.returnUserFromToken(header);
-                    if (userManager.at(username)==null) {
-                        System.out.println("Not logged in");
-                    }
                     playlist.printPlaylist();
+                    out.println(handler.ServerResponse);
+                    out.flush();
                 }
             } catch (IOException | SQLException | InvalidKeySpecException | NoSuchAlgorithmException e) {
                 System.out.println(e);

@@ -27,21 +27,33 @@ public class Playlist {
         ResultSet resultSet=preparedStatement.executeQuery();
         while (resultSet.next()){
             String tempFileName=resultSet.getString("filename");
-            String source=resultSet.getString("source");
+            String source=resultSet.getString("contentsource");
             int rating=resultSet.getInt("rating");
             String genre=resultSet.getString("genre");
             String title=resultSet.getString("title");
             String album=resultSet.getString("album");
             String length=resultSet.getString("length");
-            temp=new MediaContent(fileName,source,rating,genre,title,album,length);
+            temp=new MediaContent(tempFileName,source,rating,genre,title,album,length);
         }
         if(temp!=null) {
             playlist.add(temp);
+        }
+        else {
+            System.out.println("Song not available");
         }
        // MediaContent temp=new MediaContent(fileName)
     }
 
     public void printPlaylist(){
-        System.out.println(playlist);
+        if (playlist.isEmpty()){
+            System.out.println("Empty playlist");
+        }
+        else {
+            for (int i=0;i<playlist.size();i++){
+                MediaContent temp=playlist.get(i);
+                System.out.println("Filename: "+temp.getFileName()+" Title: "+temp.getTitle()+" Rating: "+temp.getRating()
+                +" Length: "+temp.getLength());
+            }
+        }
     }
 }
