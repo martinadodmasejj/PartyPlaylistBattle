@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Queue;
+import java.util.Stack;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class User {
@@ -24,6 +27,7 @@ public class User {
     private StatsManager statsManager=new StatsManager();
     private boolean isAdmin;
     public Library lib=new Library();
+    public Stack<Character> actions=new Stack<>();
 
     @JsonCreator
     User(@JsonProperty("Username")String username,@JsonProperty("Password")String password)  {
@@ -55,6 +59,8 @@ public class User {
     }
 
     public void promoteAdmin() { isAdmin=true; }
+
+
 
     public void setUsername(String username) {
         this.username = username;
