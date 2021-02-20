@@ -22,6 +22,7 @@ public class User {
     private String image;
     private ReentrantLock mutex=new ReentrantLock();
     private StatsManager statsManager=new StatsManager();
+    private boolean isAdmin;
     public Library lib=new Library();
 
     @JsonCreator
@@ -31,6 +32,7 @@ public class User {
         userID=-1; // userID is non existent
         bio="";
         image="";
+        isAdmin=false;
     }
 
     User(String username) throws SQLException {
@@ -38,6 +40,7 @@ public class User {
         userID=-1;
         bio="";
         image="";
+        isAdmin=false;
     }
     public int getVcoins() {
         return vcoins;
@@ -50,6 +53,8 @@ public class User {
     public String getUsername() {
         return username;
     }
+
+    public void promoteAdmin() { isAdmin=true; }
 
     public void setUsername(String username) {
         this.username = username;
