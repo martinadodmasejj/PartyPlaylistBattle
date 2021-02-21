@@ -14,7 +14,7 @@ public class DatabaseHandler {
     public DatabaseHandler() throws SQLException {
         jdbcURL="jdbc:postgresql://localhost:5432/PartyPlaylistBattle";
         username="postgres";
-        password="root";
+        password="Marti_19";
         connection = DriverManager.getConnection(jdbcURL,username,password);
         //System.out.println("Database Connected");
     }

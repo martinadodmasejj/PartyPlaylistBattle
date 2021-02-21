@@ -8,18 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class JsonSerializer {
-    /*
-    public Card convertCardToObject(String jsonCard) throws JsonProcessingException {
-        ObjectMapper objectMapper=new ObjectMapper();
-        Card card;
-        if(jsonCard.contains("Spell")){
-             card = objectMapper.readValue(jsonCard,SpellCard.class);
-        }
-        else{
-             card = objectMapper.readValue(jsonCard,MonsterCard.class);
-        }
-        return card;
-    }*/
 
     public MediaContent convertMediaToObject(String jsonContent)throws JsonProcessingException{
         ObjectMapper objectMapper=new ObjectMapper();

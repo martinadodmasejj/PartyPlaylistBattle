@@ -176,7 +176,7 @@ public class User {
                 "userid) VALUES (?)";
         PreparedStatement preparedStatement= dbHandler.getConnection().prepareStatement(sqlInsert);
         preparedStatement.setInt(1,userID);
-        ResultSet resultSet=preparedStatement.executeQuery();
+        preparedStatement.executeUpdate();
     }
 
     public void getLibraryID(DatabaseHandler dbHandler)throws SQLException{

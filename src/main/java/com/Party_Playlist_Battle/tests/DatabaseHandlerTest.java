@@ -20,13 +20,13 @@ public class DatabaseHandlerTest {
         String actual="";
         //Act
         dbHandler.createUser(username,password);
-        String selectStatement="Select \"username\" from \"MonsterCardGame\".\"user\" ";
+        String selectStatement="Select \"username\" from \"PartyPlaylistBattle\".\"user\" ";
         Statement stmt=dbHandler.getConnection().createStatement();
         ResultSet resultSet=stmt.executeQuery(selectStatement);
         while (resultSet.next()){
             actual=resultSet.getString("username");
         }
-        String cleanUpStatement="delete from \"MonsterCardGame\".\"user\" where \"username\"=\'test\'";
+        String cleanUpStatement="delete from \"PartyPlaylistBattle\".\"user\" where \"username\"=\'test\'";
         stmt.executeUpdate(cleanUpStatement);
         //Assert
         Assert.assertEquals("test",actual);
