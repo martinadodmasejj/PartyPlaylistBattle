@@ -107,7 +107,7 @@ public class ClientThread extends Thread {
                         System.out.println("Battle could not conclude due to error");
                     }
                     else {
-                        userManager.at(winner).promoteToAdmin();
+                        userManager.at(winner).promoteToAdmin();    
                         System.out.println(winner+" won!");
                     }
                     out.println(handler.ServerResponse);
