@@ -1,1 +1,1 @@
-https://github.com/denislesha28/Monster_Card_Trading_Game.git
+https://github.com/martinadodmasejj/PartyPlaylistBattle.git
