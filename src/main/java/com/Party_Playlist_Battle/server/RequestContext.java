@@ -120,6 +120,9 @@ public class RequestContext {
 
     public String readActions(String payload){
         String temp="";
+        if (payload.contains("random")){
+            return "random";
+        }
         for (int i=13;payload.charAt(i)!='\"';i++){
             if (payload.charAt(i)!='R' && payload.charAt(i)!='P' && payload.charAt(i)!='S'){
                 return "";

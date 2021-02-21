@@ -209,7 +209,32 @@ public class User {
         }
     }
 
+    public void fillActionsRandomly(){
+        int max=3;
+        int min=1;
+        int temp;
+        if (!actions.isEmpty()){
+            actions.clear();
+        }
+        for (int i=0;i<5;i++){
+            temp = (int)(Math.random() * (max - min + 1) + min);
+            if (temp==1) {
+                actions.add('R');
+            }
+            else if(temp==2) {
+                actions.add('S');
+            }
+            else if(temp==3){
+                actions.add('P');
+            }
+        }
+    }
+
     public void printActions(){
+        if (actions.isEmpty()){
+            System.out.println("No actions configured");
+            return;
+        }
         String values= Arrays.toString(actions.toArray());
         System.out.println(values);
     }

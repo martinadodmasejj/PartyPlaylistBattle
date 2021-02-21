@@ -132,6 +132,9 @@ public class ClientThread extends Thread {
                     if (actions.isEmpty()){
                         System.out.println("Invalid actions");
                     }
+                    else if(actions.compareTo("random")==0){
+                        userManager.at(username).fillActionsRandomly();
+                    }
                     else {
                         userManager.at(username).fillActionsList(actions);
                     }

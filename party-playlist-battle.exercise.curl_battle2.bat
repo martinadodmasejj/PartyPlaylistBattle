@@ -145,12 +145,6 @@ echo.
 echo.
 
 REM --------------------------------------------------
-echo 13) reorder (should fail, not admin)
-curl -X PUT http://localhost:10001/playlist --header "Content-Type: application/json" --header "Authorization: Basic kienboec-ppbToken" -d "{\"FromPosition\": 1, \"ToPosition\": 4}"
-echo.
-echo.
-
-REM --------------------------------------------------
 echo 14) set actions (kienboec)
 curl -X GET http://localhost:10001/actions --header "Authorization: Basic kienboec-ppbToken"
 curl -X PUT http://localhost:10001/actions --header "Content-Type: application/json" --header "Authorization: Basic kienboec-ppbToken" -d "{\"actions\": \"RRRRR\"}"
@@ -167,7 +161,7 @@ curl -X GET http://localhost:10001/actions --header "Authorization: Basic kienbo
 echo set actions (altenhof):
 
 curl -X GET http://localhost:10001/actions --header "Authorization: Basic altenhof-ppbToken"
-curl -X PUT http://localhost:10001/actions --header "Content-Type: application/json" --header "Authorization: Basic altenhof-ppbToken" -d "{\"actions\": \"SSSSS\"}"
+curl -X PUT http://localhost:10001/actions --header "Content-Type: application/json" --header "Authorization: Basic altenhof-ppbToken" -d "{\"actions\": \"PPPPP\"}"
 curl -X GET http://localhost:10001/actions --header "Authorization: Basic altenhof-ppbToken"
 
 echo.
@@ -195,45 +189,3 @@ curl -X GET http://localhost:10001/score --header "Authorization: Basic kienboec
 curl -X GET http://localhost:10001/score --header "Authorization: Basic altenhof-ppbToken"
 echo.
 echo.
-
-REM --------------------------------------------------
-echo 18) reorder (admin)
-curl -X PUT http://localhost:10001/playlist --header "Content-Type: application/json" --header "Authorization: Basic kienboec-ppbToken" -d "{\"FromPosition\": 1, \"ToPosition\": 4}"
-curl -X GET http://localhost:10001/playlist
-echo.
-echo.
-
-REM --------------------------------------------------
-echo 19) set actions to simulate a draw
-curl -X PUT http://localhost:10001/actions --header "Content-Type: application/json" --header "Authorization: Basic altenhof-ppbToken" -d "{\"actions\": \"RRRRR\"}"
-echo.
-echo.
-
-REM --------------------------------------------------
-echo 20) battle (no admin)
-start /b "kienboec battle" curl -X POST http://localhost:10001/battles --header "Authorization: Basic kienboec-ppbToken"
-start /b "altenhof battle" curl -X POST http://localhost:10001/battles --header "Authorization: Basic altenhof-ppbToken"
-ping localhost -n 20 >NUL 2>NUL
-echo.
-echo.
-
-REM --------------------------------------------------
-echo 21) reorder (should fail)
-curl -X PUT http://localhost:10001/playlist --header "Content-Type: application/json" --header "Authorization: Basic kienboec-ppbToken" -d "{\"FromPosition\": 1, \"ToPosition\": 3}"
-curl -X PUT http://localhost:10001/playlist --header "Content-Type: application/json" --header "Authorization: Basic altenhof-ppbToken" -d "{\"FromPosition\": 1, \"ToPosition\": 3}"
-echo.
-echo.
-
-REM --------------------------------------------------
-echo 22) scoreboard
-curl -X GET http://localhost:10001/score --header "Authorization: Basic kienboec-ppbToken"
-curl -X GET http://localhost:10001/score --header "Authorization: Basic altenhof-ppbToken"
-echo.
-echo.
-
-echo.
-echo.
-echo.
-
-pause
-@echo on
