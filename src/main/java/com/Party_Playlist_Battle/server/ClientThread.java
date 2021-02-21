@@ -204,6 +204,10 @@ public class ClientThread extends Thread {
                     out.println(handler.ServerResponse);
                     out.flush();
                 }
+                else{
+                    out.println(handler.ServerResponse);
+                    out.flush();
+                }
             } catch (IOException | SQLException | InvalidKeySpecException | NoSuchAlgorithmException e) {
                 System.out.println(e);
                 out.println(handler.ServerResponse);

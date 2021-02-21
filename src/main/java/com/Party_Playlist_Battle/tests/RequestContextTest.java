@@ -39,7 +39,7 @@ public class RequestContextTest {
                 "Content-Length: 59\n");
         String actual=handler.readRequest();
         //Assert
-        Assert.assertEquals("messages ", actual);
+        Assert.assertEquals("messages", actual);
     }
 
 
