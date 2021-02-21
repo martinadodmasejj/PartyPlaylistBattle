@@ -1,0 +1,551 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.1
+-- Dumped by pg_dump version 13.1
+
+-- Started on 2021-02-21 19:45:08
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'BIG5';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 5 (class 2615 OID 16396)
+-- Name: PartyPlaylistBattle; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA "PartyPlaylistBattle";
+
+
+ALTER SCHEMA "PartyPlaylistBattle" OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 205 (class 1259 OID 73786)
+-- Name: battlelog; Type: TABLE; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+CREATE TABLE "PartyPlaylistBattle".battlelog (
+    battleid integer NOT NULL,
+    winnerid integer NOT NULL,
+    loserid integer NOT NULL,
+    battletime timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE "PartyPlaylistBattle".battlelog OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 73784)
+-- Name: battlelog_battleid_seq; Type: SEQUENCE; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+CREATE SEQUENCE "PartyPlaylistBattle".battlelog_battleid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "PartyPlaylistBattle".battlelog_battleid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3055 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: battlelog_battleid_seq; Type: SEQUENCE OWNED BY; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER SEQUENCE "PartyPlaylistBattle".battlelog_battleid_seq OWNED BY "PartyPlaylistBattle".battlelog.battleid;
+
+
+--
+-- TOC entry 207 (class 1259 OID 81980)
+-- Name: library; Type: TABLE; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+CREATE TABLE "PartyPlaylistBattle".library (
+    libraryid integer NOT NULL,
+    userid integer
+);
+
+
+ALTER TABLE "PartyPlaylistBattle".library OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 81978)
+-- Name: library_libraryid_seq; Type: SEQUENCE; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+CREATE SEQUENCE "PartyPlaylistBattle".library_libraryid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "PartyPlaylistBattle".library_libraryid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3057 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: library_libraryid_seq; Type: SEQUENCE OWNED BY; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER SEQUENCE "PartyPlaylistBattle".library_libraryid_seq OWNED BY "PartyPlaylistBattle".library.libraryid;
+
+
+--
+-- TOC entry 209 (class 1259 OID 81993)
+-- Name: mediacontent; Type: TABLE; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+CREATE TABLE "PartyPlaylistBattle".mediacontent (
+    contentid integer NOT NULL,
+    filename character varying(255) NOT NULL,
+    contentsource character varying(255) NOT NULL,
+    rating integer NOT NULL,
+    genre character varying(255) NOT NULL,
+    title character varying(255),
+    libraryid integer,
+    length character varying(50),
+    album character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE "PartyPlaylistBattle".mediacontent OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 81991)
+-- Name: mediacontent_contentid_seq; Type: SEQUENCE; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+CREATE SEQUENCE "PartyPlaylistBattle".mediacontent_contentid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "PartyPlaylistBattle".mediacontent_contentid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3059 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: mediacontent_contentid_seq; Type: SEQUENCE OWNED BY; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER SEQUENCE "PartyPlaylistBattle".mediacontent_contentid_seq OWNED BY "PartyPlaylistBattle".mediacontent.contentid;
+
+
+--
+-- TOC entry 203 (class 1259 OID 65560)
+-- Name: stats; Type: TABLE; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+CREATE TABLE "PartyPlaylistBattle".stats (
+    scoreid integer NOT NULL,
+    userid integer NOT NULL,
+    wins integer DEFAULT 0 NOT NULL,
+    losses integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE "PartyPlaylistBattle".stats OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 65558)
+-- Name: stats_scoreid_seq; Type: SEQUENCE; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+CREATE SEQUENCE "PartyPlaylistBattle".stats_scoreid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "PartyPlaylistBattle".stats_scoreid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3061 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: stats_scoreid_seq; Type: SEQUENCE OWNED BY; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER SEQUENCE "PartyPlaylistBattle".stats_scoreid_seq OWNED BY "PartyPlaylistBattle".stats.scoreid;
+
+
+--
+-- TOC entry 201 (class 1259 OID 32808)
+-- Name: user; Type: TABLE; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+CREATE TABLE "PartyPlaylistBattle"."user" (
+    userid integer NOT NULL,
+    username character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    vcoins integer DEFAULT 20 NOT NULL,
+    bio character varying(255) DEFAULT 'default bio'::character varying,
+    image character varying(255) DEFAULT 'empty'::character varying,
+    firstname character varying(255) DEFAULT 'anonym'::character varying
+);
+
+
+ALTER TABLE "PartyPlaylistBattle"."user" OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 32806)
+-- Name: user_userid_seq; Type: SEQUENCE; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+CREATE SEQUENCE "PartyPlaylistBattle".user_userid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "PartyPlaylistBattle".user_userid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3063 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: user_userid_seq; Type: SEQUENCE OWNED BY; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER SEQUENCE "PartyPlaylistBattle".user_userid_seq OWNED BY "PartyPlaylistBattle"."user".userid;
+
+
+--
+-- TOC entry 2885 (class 2604 OID 73789)
+-- Name: battlelog battleid; Type: DEFAULT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".battlelog ALTER COLUMN battleid SET DEFAULT nextval('"PartyPlaylistBattle".battlelog_battleid_seq'::regclass);
+
+
+--
+-- TOC entry 2887 (class 2604 OID 81983)
+-- Name: library libraryid; Type: DEFAULT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".library ALTER COLUMN libraryid SET DEFAULT nextval('"PartyPlaylistBattle".library_libraryid_seq'::regclass);
+
+
+--
+-- TOC entry 2888 (class 2604 OID 81996)
+-- Name: mediacontent contentid; Type: DEFAULT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".mediacontent ALTER COLUMN contentid SET DEFAULT nextval('"PartyPlaylistBattle".mediacontent_contentid_seq'::regclass);
+
+
+--
+-- TOC entry 2882 (class 2604 OID 65563)
+-- Name: stats scoreid; Type: DEFAULT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".stats ALTER COLUMN scoreid SET DEFAULT nextval('"PartyPlaylistBattle".stats_scoreid_seq'::regclass);
+
+
+--
+-- TOC entry 2877 (class 2604 OID 32811)
+-- Name: user userid; Type: DEFAULT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle"."user" ALTER COLUMN userid SET DEFAULT nextval('"PartyPlaylistBattle".user_userid_seq'::regclass);
+
+
+--
+-- TOC entry 3044 (class 0 OID 73786)
+-- Dependencies: 205
+-- Data for Name: battlelog; Type: TABLE DATA; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+INSERT INTO "PartyPlaylistBattle".battlelog VALUES (56, 149, 152, '2021-02-21 01:08:54.426258');
+INSERT INTO "PartyPlaylistBattle".battlelog VALUES (57, 149, 152, '2021-02-21 01:10:24.999372');
+INSERT INTO "PartyPlaylistBattle".battlelog VALUES (58, 149, 152, '2021-02-21 01:21:13.146602');
+INSERT INTO "PartyPlaylistBattle".battlelog VALUES (59, 149, 152, '2021-02-21 01:28:50.713948');
+INSERT INTO "PartyPlaylistBattle".battlelog VALUES (60, 149, 152, '2021-02-21 01:31:08.75921');
+INSERT INTO "PartyPlaylistBattle".battlelog VALUES (61, 149, 152, '2021-02-21 18:42:55.465294');
+INSERT INTO "PartyPlaylistBattle".battlelog VALUES (62, 152, 149, '2021-02-21 18:49:41.90904');
+
+
+--
+-- TOC entry 3046 (class 0 OID 81980)
+-- Dependencies: 207
+-- Data for Name: library; Type: TABLE DATA; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+INSERT INTO "PartyPlaylistBattle".library VALUES (12, 149);
+INSERT INTO "PartyPlaylistBattle".library VALUES (13, 152);
+INSERT INTO "PartyPlaylistBattle".library VALUES (14, 153);
+
+
+--
+-- TOC entry 3048 (class 0 OID 81993)
+-- Dependencies: 209
+-- Data for Name: mediacontent; Type: TABLE DATA; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+INSERT INTO "PartyPlaylistBattle".mediacontent VALUES (8, 'Good_Mood_Song', 'https://youtu.be/H9cmPE88a_0', 4, 'Pop', 'Duck Tales Intro', 12, '2:52', 'Theme Songs');
+INSERT INTO "PartyPlaylistBattle".mediacontent VALUES (9, 'Super_Mario_song', 'https://www.youtube.com/watch?v=wyoNnMO3zFk', 4, 'GameMusic', 'Super Mario', 13, NULL, NULL);
+
+
+--
+-- TOC entry 3042 (class 0 OID 65560)
+-- Dependencies: 203
+-- Data for Name: stats; Type: TABLE DATA; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+INSERT INTO "PartyPlaylistBattle".stats VALUES (35, 153, 0, 0);
+INSERT INTO "PartyPlaylistBattle".stats VALUES (34, 152, 1, 6);
+INSERT INTO "PartyPlaylistBattle".stats VALUES (33, 149, 6, 1);
+
+
+--
+-- TOC entry 3040 (class 0 OID 32808)
+-- Dependencies: 201
+-- Data for Name: user; Type: TABLE DATA; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+INSERT INTO "PartyPlaylistBattle"."user" VALUES (153, 'admin', '1000:825c2c41c5b0160608204a8c12dd77e6:a7661073686213a442ddad75854e714566cbbb0cfbd3765b4b0c2ebef72f1885811b476b2033ab9824e60a93c240a8090c96fb2dbbe1fb15860f2d8ad7403b59', 20, 'default bio', 'empty', 'anonym');
+INSERT INTO "PartyPlaylistBattle"."user" VALUES (149, 'kienboec', '1000:5e90399b0017dddc569705a2a83aaf9d:af48623ded1a95096e678fcceae1e0ef95b11bc8ea768f84bd623b360b94f62b58632f74dd555836e57f1e71e5e096fa531dc18f9795f11af3dc0387ab25fa86', 20, 'me playin...', ':-)', 'Kienboeck');
+INSERT INTO "PartyPlaylistBattle"."user" VALUES (152, 'altenhof', '1000:d3972052414978cb0c25f53a7186c88c:e40bd19d49a6e8c2a0d6e355f91579f6aefccc88620a0b32f75f11c0d8b800bef55412526fdfd784a3c6dbab5e155aea606838e2606434295b2c902aaeadc3bf', 20, 'live long and prosper...', ':-D', 'Altenhofer');
+
+
+--
+-- TOC entry 3064 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: battlelog_battleid_seq; Type: SEQUENCE SET; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"PartyPlaylistBattle".battlelog_battleid_seq', 62, true);
+
+
+--
+-- TOC entry 3065 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: library_libraryid_seq; Type: SEQUENCE SET; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"PartyPlaylistBattle".library_libraryid_seq', 14, true);
+
+
+--
+-- TOC entry 3066 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: mediacontent_contentid_seq; Type: SEQUENCE SET; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"PartyPlaylistBattle".mediacontent_contentid_seq', 141, true);
+
+
+--
+-- TOC entry 3067 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: stats_scoreid_seq; Type: SEQUENCE SET; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"PartyPlaylistBattle".stats_scoreid_seq', 35, true);
+
+
+--
+-- TOC entry 3068 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: user_userid_seq; Type: SEQUENCE SET; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"PartyPlaylistBattle".user_userid_seq', 376, true);
+
+
+--
+-- TOC entry 2897 (class 2606 OID 73791)
+-- Name: battlelog battlelog_pkey; Type: CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".battlelog
+    ADD CONSTRAINT battlelog_pkey PRIMARY KEY (battleid);
+
+
+--
+-- TOC entry 2899 (class 2606 OID 81985)
+-- Name: library library_pkey; Type: CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".library
+    ADD CONSTRAINT library_pkey PRIMARY KEY (libraryid);
+
+
+--
+-- TOC entry 2901 (class 2606 OID 82001)
+-- Name: mediacontent mediacontent_pkey; Type: CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".mediacontent
+    ADD CONSTRAINT mediacontent_pkey PRIMARY KEY (contentid);
+
+
+--
+-- TOC entry 2895 (class 2606 OID 65565)
+-- Name: stats stats_pkey; Type: CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".stats
+    ADD CONSTRAINT stats_pkey PRIMARY KEY (scoreid);
+
+
+--
+-- TOC entry 2903 (class 2606 OID 82014)
+-- Name: mediacontent unique_filename; Type: CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".mediacontent
+    ADD CONSTRAINT unique_filename UNIQUE (filename);
+
+
+--
+-- TOC entry 2891 (class 2606 OID 32816)
+-- Name: user user_pkey; Type: CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle"."user"
+    ADD CONSTRAINT user_pkey PRIMARY KEY (userid);
+
+
+--
+-- TOC entry 2893 (class 2606 OID 32828)
+-- Name: user user_username_key; Type: CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle"."user"
+    ADD CONSTRAINT user_username_key UNIQUE (username);
+
+
+--
+-- TOC entry 2908 (class 2606 OID 82007)
+-- Name: mediacontent fk_library; Type: FK CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".mediacontent
+    ADD CONSTRAINT fk_library FOREIGN KEY (libraryid) REFERENCES "PartyPlaylistBattle".library(libraryid) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2906 (class 2606 OID 73797)
+-- Name: battlelog fk_loserid; Type: FK CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".battlelog
+    ADD CONSTRAINT fk_loserid FOREIGN KEY (winnerid) REFERENCES "PartyPlaylistBattle"."user"(userid);
+
+
+--
+-- TOC entry 2904 (class 2606 OID 65566)
+-- Name: stats fk_user; Type: FK CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".stats
+    ADD CONSTRAINT fk_user FOREIGN KEY (userid) REFERENCES "PartyPlaylistBattle"."user"(userid) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2907 (class 2606 OID 81986)
+-- Name: library fk_userid; Type: FK CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".library
+    ADD CONSTRAINT fk_userid FOREIGN KEY (userid) REFERENCES "PartyPlaylistBattle"."user"(userid) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2905 (class 2606 OID 73792)
+-- Name: battlelog fk_winnerid; Type: FK CONSTRAINT; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER TABLE ONLY "PartyPlaylistBattle".battlelog
+    ADD CONSTRAINT fk_winnerid FOREIGN KEY (winnerid) REFERENCES "PartyPlaylistBattle"."user"(userid);
+
+
+--
+-- TOC entry 3054 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: TABLE battlelog; Type: ACL; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+GRANT ALL ON TABLE "PartyPlaylistBattle".battlelog TO PUBLIC;
+
+
+--
+-- TOC entry 3056 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: TABLE library; Type: ACL; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+GRANT ALL ON TABLE "PartyPlaylistBattle".library TO PUBLIC;
+
+
+--
+-- TOC entry 3058 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: TABLE mediacontent; Type: ACL; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+GRANT ALL ON TABLE "PartyPlaylistBattle".mediacontent TO PUBLIC;
+
+
+--
+-- TOC entry 3060 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: TABLE stats; Type: ACL; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+GRANT ALL ON TABLE "PartyPlaylistBattle".stats TO PUBLIC;
+
+
+--
+-- TOC entry 3062 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: TABLE "user"; Type: ACL; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+GRANT ALL ON TABLE "PartyPlaylistBattle"."user" TO PUBLIC;
+
+
+--
+-- TOC entry 1737 (class 826 OID 16397)
+-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: PartyPlaylistBattle; Owner: postgres
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA "PartyPlaylistBattle" REVOKE ALL ON TABLES  FROM postgres;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA "PartyPlaylistBattle" GRANT ALL ON TABLES  TO PUBLIC;
+
+
+-- Completed on 2021-02-21 19:45:08
+
+--
+-- PostgreSQL database dump complete
+--
+
