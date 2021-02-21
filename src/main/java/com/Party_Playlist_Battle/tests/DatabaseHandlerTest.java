@@ -25,6 +25,9 @@ public class DatabaseHandlerTest {
         ResultSet resultSet=stmt.executeQuery(selectStatement);
         while (resultSet.next()){
             actual=resultSet.getString("username");
+            if (actual.compareTo("test")==0){
+                break;
+            }
         }
         String cleanUpStatement="delete from \"PartyPlaylistBattle\".\"user\" where \"username\"=\'test\'";
         stmt.executeUpdate(cleanUpStatement);
