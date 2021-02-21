@@ -8,11 +8,11 @@ import java.sql.SQLException;
 
 
 public class StatsManager {
-    public void updateUserStats(int winnerID,int loserID,boolean draw,DatabaseHandler dbHandler) throws SQLException {
+    public void updateUserStats(int winnerID,int loserID,DatabaseHandler dbHandler) throws SQLException {
         String winSql="\tUPDATE \"PartyPlaylistBattle\".\"stats\" " +
                 "set \"wins\"=\"wins\"+1 " +
                 "where \"userid\"=?";
-        String loseSql="UPDATE \"MonsterCardGame\".\"stats\" " +
+        String loseSql="UPDATE \"PartyPlaylistBattle\".\"stats\" " +
                 "set \"losses\"=\"losses\"+1 " +
                 "where \"userid\"=?";
         PreparedStatement preparedStatement=dbHandler.getConnection().prepareStatement(winSql);
@@ -39,8 +39,8 @@ public class StatsManager {
         }
     }
 
-    public void insertBattleLog(DatabaseHandler dbHandler,int winnerID,int loserID,boolean draw)throws SQLException{
-        String insertIntoBattleLog="INSERT INTO \"MonsterCardGame\".battlelog( " +
+    public void insertBattleLog(int winnerID,int loserID,DatabaseHandler dbHandler)throws SQLException{
+        String insertIntoBattleLog="INSERT INTO \"PartyPlaylistBattle\".battlelog( " +
                 "winnerid, loserid) VALUES (?, ?)";
         PreparedStatement preparedStatement=dbHandler.getConnection().prepareStatement(insertIntoBattleLog);
         preparedStatement.setInt(1,winnerID);

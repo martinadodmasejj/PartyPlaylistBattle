@@ -3,6 +3,8 @@ package com.Party_Playlist_Battle.server;
 import com.Party_Playlist_Battle.playlist_and_library.Library;
 import com.Party_Playlist_Battle.playlist_and_library.MediaContent;
 import com.Party_Playlist_Battle.playlist_and_library.Playlist;
+import com.Party_Playlist_Battle.user.BattleLogic;
+import com.Party_Playlist_Battle.user.StatsManager;
 import com.Party_Playlist_Battle.user.User;
 import com.Party_Playlist_Battle.user.UserManager;
 
@@ -26,6 +28,8 @@ public class ClientThread extends Thread {
     UserManager userManager;
     private ReentrantLock mutex=new ReentrantLock();
     Playlist playlist;
+    BattleLogic battleLogic=new BattleLogic();
+    StatsManager statsManager=new StatsManager();
 
     public ClientThread(Socket clientSocket, UserManager userManager, Playlist playlist) throws SQLException, IOException {
         dbHandler = new DatabaseHandler();
@@ -83,18 +87,32 @@ public class ClientThread extends Thread {
                     out.println(handler.ServerResponse);
                     out.flush();
                 }
-                /*else if (request.compareTo("battles")==0){
+                else if (request.compareTo("battles")==0){
                     String username=tokenGenerator.returnUserFromToken(header);
                     if (userManager.at(username)==null){
                         System.out.println("Not logged in");
                     }
                     else {
                         userManager.queueUp(userManager.at(username));
-                        userManager.startBattle(dbHandler);
+                    }
+                    String winner=userManager.startBattle(battleLogic,dbHandler);
+                    if (username.compareTo(winner)==0){
+                        userManager.at(username).promoteToAdmin();
+                        System.out.println(winner+" won!");
+                    }
+                    else if (winner.compareTo("Draw")==0){
+                        System.out.println("Draw between the Users");
+                    }
+                    else if(winner.compareTo("error")==0){
+                        System.out.println("Battle could not conclude due to error");
+                    }
+                    else {
+                        userManager.at(winner).promoteToAdmin();
+                        System.out.println(winner+" won!");
                     }
                     out.println(handler.ServerResponse);
                     out.flush();
-                }*/
+                }
                 else if(request.compareTo("lib")==0 && verb.compareTo("POST")==0){
                     String username=tokenGenerator.returnUserFromToken(header);
                     if (userManager.at(username)==null) {
@@ -102,6 +120,30 @@ public class ClientThread extends Thread {
                     }
                     MediaContent tempMedia=jsonSerializer.convertMediaToObject(payload);
                     tempMedia.uploadMediaContent(dbHandler,userManager.at(username));
+                    out.println(handler.ServerResponse);
+                    out.flush();
+                }
+                else if(request.compareTo("actions")==0 && verb.compareTo("PUT")==0){
+                    String username=tokenGenerator.returnUserFromToken(header);
+                    if (userManager.at(username)==null) {
+                        System.out.println("Not logged in");
+                    }
+                    String actions=handler.readActions(payload);
+                    if (actions.isEmpty()){
+                        System.out.println("Invalid actions");
+                    }
+                    else {
+                        userManager.at(username).fillActionsList(actions);
+                    }
+                    out.println(handler.ServerResponse);
+                    out.flush();
+                }
+                else if(request.compareTo("actions")==0 && verb.compareTo("GET")==0){
+                    String username=tokenGenerator.returnUserFromToken(header);
+                    if (userManager.at(username)==null) {
+                        System.out.println("Not logged in");
+                    }
+                    userManager.at(username).printActions();
                     out.println(handler.ServerResponse);
                     out.flush();
                 }

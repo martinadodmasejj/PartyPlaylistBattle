@@ -12,12 +12,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class User {
-    private int vcoins;
     private String username;
     private String password;
     private int userID;
@@ -27,7 +25,7 @@ public class User {
     private StatsManager statsManager=new StatsManager();
     private boolean isAdmin;
     public Library lib=new Library();
-    public Stack<Character> actions=new Stack<>();
+    public List<Character> actions=new ArrayList();
 
     @JsonCreator
     User(@JsonProperty("Username")String username,@JsonProperty("Password")String password)  {
@@ -46,21 +44,14 @@ public class User {
         image="";
         isAdmin=false;
     }
-    public int getVcoins() {
-        return vcoins;
-    }
-
-    public void setVcoins(int vcoins) {
-        this.vcoins = vcoins;
-    }
 
     public String getUsername() {
         return username;
     }
 
-    public void promoteAdmin() { isAdmin=true; }
-
-
+    public void promoteToAdmin(){
+        isAdmin=true;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -208,5 +199,20 @@ public class User {
         getUserIdDatabase(dbHandler);
         statsManager.showScoreboard(dbHandler,this);
     }
+
+    public void fillActionsList(String payload){
+        if (!actions.isEmpty()){
+            actions.clear();
+        }
+        for (int i=0;i<payload.length();i++){
+            actions.add(payload.charAt(i));
+        }
+    }
+
+    public void printActions(){
+        String values= Arrays.toString(actions.toArray());
+        System.out.println(values);
+    }
+
 
 }

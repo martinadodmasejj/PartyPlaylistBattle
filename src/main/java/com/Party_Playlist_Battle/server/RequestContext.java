@@ -118,4 +118,18 @@ public class RequestContext {
         return fileName;
     }
 
+    public String readActions(String payload){
+        String temp="";
+        for (int i=13;payload.charAt(i)!='\"';i++){
+            if (payload.charAt(i)!='R' && payload.charAt(i)!='P' && payload.charAt(i)!='S'){
+                return "";
+            }
+            temp+=payload.charAt(i);
+        }
+        if (temp.length()<5){
+            return "";
+        }
+        return temp;
+    }
+
 }

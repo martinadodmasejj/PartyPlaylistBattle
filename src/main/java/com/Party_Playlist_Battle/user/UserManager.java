@@ -10,6 +10,7 @@ import java.util.Queue;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class UserManager {
+    StatsManager statsManager=new StatsManager();
     List<User> users=new ArrayList<>();
     Queue<User> battleQueue=new LinkedList();
     private ReentrantLock mutex=new ReentrantLock();
@@ -55,6 +56,35 @@ public class UserManager {
         }
         battleQueue.add(user);
         mutex.unlock();
+    }
+
+    public String startBattle(BattleLogic battleLogic,DatabaseHandler dbHandler) throws SQLException {
+        User temp1;
+        User temp2;
+        mutex.lock();
+        temp1=battleQueue.poll();
+        temp2=battleQueue.poll();
+        mutex.unlock();
+        if (temp2==null){
+            queueUp(temp1);
+        }
+        int result=battleLogic.battleUsers(temp1,temp2);
+        if (result==1){
+            statsManager.updateUserStats(temp1.getUserID(dbHandler),temp2.getUserID(dbHandler),dbHandler);
+            statsManager.insertBattleLog(temp1.getUserID(dbHandler),temp2.getUserID(dbHandler),dbHandler);
+            return temp1.getUsername();
+        }
+        else if (result==2){
+            statsManager.updateUserStats(temp2.getUserID(dbHandler),temp1.getUserID(dbHandler),dbHandler);
+            statsManager.insertBattleLog(temp2.getUserID(dbHandler),temp1.getUserID(dbHandler),dbHandler);
+            return temp2.getUsername();
+        }
+        else if (result==4) {
+            return "error";
+        }
+        else {
+            return "Draw";
+        }
     }
 
   /*  public void startBattle(DatabaseHandler dbHandler) throws SQLException {
