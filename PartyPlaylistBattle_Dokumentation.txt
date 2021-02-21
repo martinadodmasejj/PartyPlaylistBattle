@@ -1,0 +1,78 @@
+PartyBattlePlaylist - Dokumentation
+
+Technische Entscheidungen:
+Enums wurden dazu verwendet um Media Content Genres zu unterscheiden 
+warum ?:
+	->code wird leichter zum lesen
+	->Enums sind performanter zu vergleichen als Strings 
+
+Jackson Library dafür verwendet um JSON Syntax in JAVA-Objekten zu serialisieren
+warum ?:
+	->leichte Implementierung via Maven
+	->leichte umwandlung in Java Objekt
+
+Password Hashing via PBKDF2 
+warum ?:
+	->Password gesichert in Datenbank gespeichert
+
+Als Multithreading implementation wird die Java Klasse Thread verwendet
+Synchronisation via Mutexes
+	beim hinzufügen von Content im Playlist
+	beim Verwaltung von eingeloggten Benutzer
+Pro Thread wird eine Datenbankverbindung aufgebaut 
+Pro Thread gibt es auch eine HTTPHandler and TokenHandler 
+warum ?:
+	->unterstützte Implementation von Multithreading
+	->Synchronisations Fehler zu vermeiden
+
+Userverwaltung wird via die Klasse Usermanager gemacht 
+Eingeloggte Benutzer werden gespeichert und konnen von alle Threads zugegriffen werden
+Synchronisation via Mutexes 
+Grunde dafür:
+	->Thread safe globale Verwaltung und Zugriff von Benutzer
+
+Testing von kritische Bereiche:
+
+DatabaseHandlerTest -> es wird getestet ob die Verbindung mit Datenbank funktional ist - kritisch fur das Persistenz von Daten
+JsonSerializerTest -> es wird getestet ob Json Strings korrekt in Java Objekten umgewandelt werden - kritisch fur das umwandeln von String Daten in Java Objekte
+PasswordHashingTest -> es wird getestet ob das Password validierung mit Hash richtig funktioniert - kritisch fur das Einloggen von User
+RequestContextTest -> es wird der HTTP Handler getestet - kritisch weil Datenübertragung über HTTP erfolgt
+
+Time Tracking:
+2 Std Databaseconnection
+10 Std HTTPHandler
+1 Std 1st version Battle Implementation 
+0.5 Std Media Content Design
+2 Std Json Serialiser
+1 Std Database Design
+0.5 Std Database erstellen
+1.5 Std Database Queries für den Spiel
+2 Std Test Klassen
+0.5 Std Git verwaltung
+1 Std Hashing and Validation
+0.5 Std User erstellung 
+2 Std Token Generator
+5 Std Library Verwaltun 
+2 Std Multithreading and Synchronization
+1.5 Std Userverwaltung
+2 Std Battle Implementation final
+2 Std Global Playlist Verwaltung 
+5 Std Scoreboard and User Stats
+0.5 Std User Profil
+
+Mögliche Verbesserungen / Lessons Learned:
+
+ThreadPool - Threads aus eine Pool von Threads zu nehmen
+DatabaseVerbindungenPool - dieselbe Konzept für eine Datenbank
+
+Multithreaded approach
+Bis zur hälfte vom Programm wurde einfach entwickelt ohne darum viel zu denken ob die Implementation
+korrekt beim Multithreading interpretiert wird. Deshalb ist dann später viel Arbeit aufgetaucht um Klassen
+zu ändern und Implementationen anzupassen dass sie von mehrere Threads korrekt intepretiert werden
+
+
+
+
+
+
+
